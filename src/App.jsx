@@ -19,22 +19,22 @@ export const App = () => {
   const [goods, setGoods] = useState(goodsFromServer);
   const [order, setOrder] = useState('default');
 
-  const sortAlphabetical = () => {
+  const handleSortAlphabetically = () => {
     setGoods([...goods].sort((a, b) => a.localeCompare(b)));
     setOrder('alphabetical');
   };
 
-  const sortByLength = () => {
+  const handleSortByLength = () => {
     setGoods([...goods].sort((a, b) => a.length - b.length));
     setOrder('length');
   };
 
-  const reset = () => {
+  const handleReset = () => {
     setGoods(goodsFromServer);
     setOrder('default');
   };
 
-  const sortReverse = () => {
+  const handleReverse = () => {
     setGoods([...goods].reverse());
     setOrder(prevOrder => {
       return prevOrder === 'reversed' ? 'default' : 'reversed';
@@ -47,7 +47,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-info ${order === 'alphabetical' ? '' : 'is-light'}`}
-          onClick={sortAlphabetical}
+          onClick={handleSortAlphabetically}
         >
           Sort alphabetically
         </button>
@@ -55,7 +55,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-success ${order === 'length' ? '' : 'is-light'}`}
-          onClick={sortByLength}
+          onClick={handleSortByLength}
         >
           Sort by length
         </button>
@@ -63,7 +63,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-warning ${order === 'reversed' ? '' : 'is-light'}`}
-          onClick={sortReverse}
+          onClick={handleReverse}
         >
           Reverse
         </button>
@@ -71,7 +71,7 @@ export const App = () => {
         <button
           type="button"
           className="button is-danger is-light"
-          onClick={reset}
+          onClick={handleReset}
           style={{ display: order === 'default' ? 'none' : 'inline-block' }}
         >
           Reset
