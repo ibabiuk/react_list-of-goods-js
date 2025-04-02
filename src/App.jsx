@@ -35,7 +35,7 @@ export const App = () => {
   };
 
   const sortReverse = () => {
-    setGoods([...goods.reverse()]);
+    setGoods([...goods].reverse());
     setOrder(prevOrder => {
       return prevOrder === 'reversed' ? 'default' : 'reversed';
     });
