@@ -30,7 +30,7 @@ export const App = () => {
   };
 
   const handleReset = () => {
-    setGoods(goodsFromServer);
+    setGoods([...goodsFromServer]);
     setOrder('default');
   };
 
@@ -68,14 +68,16 @@ export const App = () => {
           Reverse
         </button>
 
-        <button
-          type="button"
-          className="button is-danger is-light"
-          onClick={handleReset}
-          style={{ display: order === 'default' ? 'none' : 'inline-block' }}
-        >
-          Reset
-        </button>
+        {order !== 'default' && (
+          <button
+            type="button"
+            className="button is-danger is-light"
+            onClick={handleReset}
+            hidden={order === 'default'}
+          >
+            Reset
+          </button>
+        )}
       </div>
 
       <ul>
