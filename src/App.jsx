@@ -18,27 +18,33 @@ export const goodsFromServer = [
 export const App = () => {
   const [goods, setGoods] = useState(goodsFromServer);
   const [order, setOrder] = useState('default');
+  const [isReversed, setIsReversed] = useState(false);
 
   const handleSortAlphabetically = () => {
-    setGoods([...goods].sort((a, b) => a.localeCompare(b)));
+    const sortedGoods = [...goodsFromServer].sort((a, b) => a.localeCompare(b));
+
+    setGoods(isReversed ? [...sortedGoods].reverse() : sortedGoods);
     setOrder('alphabetical');
   };
 
   const handleSortByLength = () => {
-    setGoods([...goods].sort((a, b) => a.length - b.length));
+    const sortedGoods = [...goodsFromServer].sort(
+      (a, b) => a.length - b.length,
+    );
+
+    setGoods(isReversed ? [...sortedGoods].reverse() : sortedGoods);
     setOrder('length');
   };
 
   const handleReset = () => {
     setGoods([...goodsFromServer]);
     setOrder('default');
+    setIsReversed(false);
   };
 
   const handleReverse = () => {
-    setGoods([...goods].reverse());
-    setOrder(prevOrder => {
-      return prevOrder === 'reversed' ? 'default' : 'reversed';
-    });
+    setGoods([...goodsFromServer].reverse());
+    setIsReversed(!isReversed);
   };
 
   return (
@@ -62,18 +68,17 @@ export const App = () => {
 
         <button
           type="button"
-          className={`button is-warning ${order === 'reversed' ? '' : 'is-light'}`}
+          className={`button is-warning ${isReversed ? '' : 'is-light'}`}
           onClick={handleReverse}
         >
           Reverse
         </button>
 
-        {order !== 'default' && (
+        {(order !== 'default' || isReversed) && (
           <button
             type="button"
             className="button is-danger is-light"
             onClick={handleReset}
-            hidden={order === 'default'}
           >
             Reset
           </button>
